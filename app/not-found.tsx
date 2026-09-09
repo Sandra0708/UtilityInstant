@@ -1,0 +1,1 @@
+﻿export default function NotFound(){return <main className="not-found"><a className="brand" href="/es">nexo.</a><p>404</p><h1>Esta herramienta no está aquí.</h1><p>This tool could not be found.</p><a className="primary-button" href="/es">Explorar herramientas / Browse tools →</a></main>;}
