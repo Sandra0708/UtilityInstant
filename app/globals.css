@@ -17,3 +17,22 @@
 @media(max-width:380px){.topbar{padding:0 12px;gap:8px}.topbar .brand{font-size:25px;gap:7px}.topbar .brandmark{width:29px;height:29px;font-size:24px;border-radius:9px}.header-actions{gap:2px}.header-actions .icon-button{width:31px;height:34px}.language>svg{display:none}.header-actions .picker{font-size:12px;gap:2px}}
 @media(max-width:650px){.mobile-ad{width:calc(100% + 32px);margin:28px -16px}.ad-inline{max-width:100%}}
 .brand-logo{display:block;width:194px;height:auto}.brand-logo-dark{display:none}.dark .brand-logo-light{display:none}.dark .brand-logo-dark{display:block}footer .brand-logo{width:154px}@media(max-width:550px){.topbar .brand-logo{width:166px}}@media(max-width:380px){.topbar .brand-logo{width:148px}}
+
+/* Reserved advertising stays outside the tools and follows natural section breaks. */
+.ad-page{display:grid;grid-template-columns:minmax(0,1180px);justify-content:center;gap:28px;max-width:1840px;margin:0 auto;padding:0 28px}
+.ad-page.tool-layout{grid-template-columns:minmax(0,1000px);padding-top:28px}
+.ad-page>.home{width:100%;min-width:0;padding:0;margin:0}
+.page-ad-left,.page-ad-right{display:none;min-width:0;padding-top:139px}
+.home-layout .page-ad-left,.home-layout .page-ad-right{padding-top:58px}
+.content-ad{margin:40px 0;clear:both}
+.catalog-ad{grid-column:1/-1;margin:22px 0}
+.ad-slot{max-width:100%;border-radius:8px;padding-top:30px;box-sizing:border-box;overflow:hidden}
+.ad-slot>span{top:10px;font-size:10px;line-height:14px;letter-spacing:1.8px}
+.ad-slot.ad-inline{width:min(300px,100%);height:282px}
+.ad-slot.ad-rail{width:300px;height:632px}
+.home-layout .ad-rail{height:282px}
+.ad-slot>div{min-width:0;min-height:0;height:100%}
+@media(min-width:800px){.ad-slot.ad-inline{width:730px;max-width:100%;height:122px}}
+@media(min-width:1280px){.ad-page{grid-template-columns:minmax(0,1180px) 300px}.ad-page.tool-layout{grid-template-columns:minmax(0,1000px) 300px}.page-ad-right{display:block}.home-layout .intro{gap:32px}.home-layout .intro h1{font-size:46px}.home-layout .category-strip{grid-template-columns:repeat(3,1fr);row-gap:18px}}
+@media(min-width:1680px){.ad-page{grid-template-columns:300px minmax(0,1180px) 300px}.ad-page.tool-layout{grid-template-columns:300px minmax(0,1000px) 300px}.page-ad-left{display:block}}
+@media(max-width:799px){.ad-page,.ad-page.tool-layout{padding-left:16px;padding-right:16px}.content-ad{margin:32px 0}.ad-slot>div{height:250px;max-height:100%}}

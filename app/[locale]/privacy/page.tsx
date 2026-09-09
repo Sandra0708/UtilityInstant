@@ -1,6 +1,6 @@
 import {notFound} from 'next/navigation';
 import {Brand} from '@/components/platform';
-import {alternate,origin} from '@/lib/seo';
+import {alternate} from '@/lib/seo';
 import type {Locale} from '@/lib/tools';
 
 export async function generateMetadata({params}:{params:Promise<{locale:string}>}){
@@ -20,8 +20,8 @@ export default async function PrivacyPage({params}:{params:Promise<{locale:strin
       <h1>{en?'Privacy policy':'Política de privacidad'}</h1>
       <p className="policy-updated">{en?'Last updated: September 9, 2026':'Última actualización: 9 de septiembre de 2026'}</p>
       {en?<>
-        <h2>Who is responsible for the site?</h2>
-        <p>UtilityInstant is operated by Sandra González Lozano. Contact: <a href="mailto:utilityinstant2026@mail.com">utilityinstant2026@mail.com</a>.</p>
+        <h2>Contact and privacy enquiries</h2>
+        <p>For technical support or privacy enquiries, contact UtilityInstant at <a href="mailto:utilityinstant2026@mail.com">utilityinstant2026@mail.com</a>.</p>
         <h2>What data do the tools process?</h2>
         <p>The calculators, converters and text tools process the information you enter in your browser. We do not create user accounts or store your inputs, results or generated passwords on our servers.</p>
         <p>Your browser may save preferences, favourite tools and recently used tools locally on your device. Normal technical information, such as the IP address and requested page, may be processed by the hosting provider to deliver and secure the site.</p>
@@ -31,8 +31,8 @@ export default async function PrivacyPage({params}:{params:Promise<{locale:strin
         <h2>Your rights</h2>
         <p>You may contact us to ask about your personal data or exercise the rights available under applicable law. We will respond through the contact address above.</p>
       </>:<>
-        <h2>¿Quién es el responsable?</h2>
-        <p>UtilityInstant está gestionada por Sandra González Lozano. Contacto: <a href="mailto:utilityinstant2026@mail.com">utilityinstant2026@mail.com</a>.</p>
+        <h2>Contacto y consultas de privacidad</h2>
+        <p>Para soporte técnico o consultas de privacidad, escribe a UtilityInstant en <a href="mailto:utilityinstant2026@mail.com">utilityinstant2026@mail.com</a>.</p>
         <h2>¿Qué datos procesan las herramientas?</h2>
         <p>Las calculadoras, conversores y herramientas de texto procesan los datos que introduces en tu navegador. No creamos cuentas de usuario ni guardamos en nuestros servidores tus entradas, resultados o contraseñas generadas.</p>
         <p>El navegador puede guardar localmente tus preferencias, herramientas favoritas y herramientas recientes. El alojamiento puede procesar información técnica normal, como la dirección IP y la página solicitada, para entregar y proteger el sitio.</p>
