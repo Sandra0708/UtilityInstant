@@ -1,4 +1,4 @@
-﻿# Nexo
+# Nexo
 
 Plataforma nueva en español e inglés con 16 herramientas locales funcionales. El original de Desktop/Test Web no se ha modificado.
 
@@ -23,3 +23,9 @@ Esta entrega inicia Fase 1. No incluye las 50 herramientas, idiomas adicionales,
 ## Seguridad de dependencias
 
 Se actualizó el conjunto React/RSC y el runtime a versiones compatibles que corrigen los avisos del scaffold. La sobrescritura de sharp 0.35.4 corrige el aviso libheif heredado de Miniflare. No hay carga ni transformación de imágenes de usuario. Verificar nuevamente `npm audit` al actualizar dependencias.
+
+## Dominio y AdSense
+
+Dominio principal acordado: utilityinstant.com. Ver DOMAIN_SETUP.md para registros, estado de validaci?n y tareas pendientes. Se han a?adido ads.txt y la etiqueta de verificaci?n con el ID real de la propietaria; esto no activa anuncios. El proveedor permanece desactivado. Las redirecciones de los alias est?n implementadas y requieren conectar sus DNS. Las URL can?nicas de la revisi?n privada se conservan hasta el lanzamiento del dominio.
+
+Validaci?n adicional: `node --experimental-strip-types --test tests/domains.test.mjs`.

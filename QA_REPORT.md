@@ -1,4 +1,4 @@
-﻿# Validación de Nexo — primera fase
+# Validación de Nexo — primera fase
 
 Fecha: 9 de septiembre de 2026.
 
@@ -14,3 +14,7 @@ Fecha: 9 de septiembre de 2026.
 ## Límites de esta entrega
 
 16 herramientas implementadas. El catálogo ampliado es una propuesta, no funcionalidad ya disponible. Publicación privada y noindex. Publicidad real desactivada; integración con proveedor y CMP pendiente. No hay medición de Core Web Vitals de campo ni garantía de ingresos o posicionamiento. Los cálculos financieros son estimaciones con supuestos visibles.
+
+## Preparaci?n del dominio y AdSense
+
+Cuatro pruebas adicionales aprobadas: conservaci?n de rutas y par?metros en redirecciones, aislamiento de hosts, prevenci?n de destinos externos y consistencia del ID de editor. TypeScript y compilaci?n de producci?n completados. DNS y HTTPS a?n pendientes en el proveedor; no se ha solicitado revisi?n ni activado anuncios reales.
