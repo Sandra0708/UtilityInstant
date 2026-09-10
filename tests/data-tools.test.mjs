@@ -1,0 +1,17 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {readDocuments,toTable} from '../lib/json-bson.ts';
+import {generatePasswords,passwordDefaults as d} from '../lib/passwords.ts';
+import {downloadName,delimited} from '../lib/table-export.ts';
+import {workbook} from '../lib/export.ts';
+test('adjacent Mongo documents, nesting, IDs, empty arrays and Unicode',()=>{
+ const parsed=readDocuments('{"_id":ObjectId("68d2d26dad4323d57a86a3d8"),"fecha":ISODate("2025-09-23T06:00:00.000+0000"),"vacío":[],"país":"España","items":[{"x":1},{"x":2}]}\n{"_id":{"$oid":"68d1dac424e08ef198a4f9ec"},"fecha":{"$date":"2025-12-31"},"vacío":[]}');
+ assert.equal(parsed.grouped,true);const table=toTable(parsed.documents);assert.equal(table.rows.length,2);assert.ok(table.columns.includes('items[1].x'));assert.equal(table.rows[0][0],'68d2d26dad4323d57a86a3d8');assert.equal(table.rows[0][2],'');assert.equal(table.rows[0][3],'España');
+ const xml=new TextDecoder().decode(workbook([{name:'Tabla',rows:[table.columns,...table.rows]}]));assert.ok(!xml.includes('ObjectId('));assert.ok(!xml.includes('ISODate('));assert.ok(xml.includes('España'));assert.ok(!xml.includes('<v>1</v>'));
+});
+test('reject malformed docs without silently rescuing a fragment',()=>{for(const s of ['{"a":1}garbage','{"a":1},','{"a":1,}','{"a":1} {','{"a":1,"a":2}','[1,]','{"a":alert(1)}'])assert.throws(()=>readDocuments(s),s);});
+test('preserve strings, primitives, large IDs and colliding paths',()=>{const t=toTable(readDocuments('{"a.b":1,"a":{"b":2},"id":9007199254740993,"literal":"ObjectId(abc)","__proto__":{"x":3}}').documents);assert.equal(t.columns.length,5);assert.equal(t.rows[0][2],'9007199254740993');assert.equal(t.rows[0][3],'ObjectId(abc)');assert.equal(toTable(readDocuments('[1,null,false,"hola"]').documents).rows.length,4);});
+test('every category individually, batches and edge restriction',()=>{for(const category of ['uppercase','lowercase','numbers','symbols']){const o={...d,uppercase:false,lowercase:false,numbers:false,symbols:false,[category]:true,count:50,edgeSymbols:category==='symbols'};const list=generatePasswords(o);assert.equal(list.length,50);assert.ok(list.every(p=>p.length===20));}const list=generatePasswords({...d,count:50});for(const p of list){assert.match(p,/^[a-z0-9].*[a-z0-9]$/i);for(const r of [/[a-z]/,/[A-Z]/,/\d/,/[^a-z0-9]/i])assert.match(p,r);}assert.throws(()=>generatePasswords({...d,uppercase:false,lowercase:false,numbers:false,edgeSymbols:false}));assert.throws(()=>generatePasswords({...d,uppercase:false,lowercase:false,numbers:false,symbols:false}));});
+test('phrase optional, exclusions, no required individual checkbox',()=>{assert.equal(generatePasswords({...d,mode:'phrase'},'')[0].length,20);const p=generatePasswords({...d,mode:'phrase',exclude:'O0Il1'},'Casa azul')[0];assert.ok(p.startsWith('CasaazuL'));assert.doesNotMatch(p,/[O0Il1]/);const ui=fs.readFileSync(new URL('../components/password-workspace.tsx',import.meta.url),'utf8');assert.ok(!ui.includes('required'));assert.ok(ui.includes("output.join('\\n')"));});
+test('exact local timestamp name and actual CSV/TSV separators',()=>{assert.equal(downloadName('json','xlsx',new Date(2026,8,10,17,20,3)),'20260910_172003_utilityinstant_tools_json.xlsx');assert.equal(delimited([['a','b'],['1','2']]),'"a"\t"b"\r\n"1"\t"2"');assert.equal(delimited([["a'b",'c']],';',"'"),"'a''b';'c'");assert.throws(()=>delimited([['a,b']],',',''));});

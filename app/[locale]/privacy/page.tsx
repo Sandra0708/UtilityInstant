@@ -18,13 +18,14 @@ export default async function PrivacyPage({params}:{params:Promise<{locale:strin
     <article className="policy-content">
       <p className="eyebrow">{en?'PRIVACY AND COOKIES':'PRIVACIDAD Y COOKIES'}</p>
       <h1>{en?'Privacy policy':'Política de privacidad'}</h1>
-      <p className="policy-updated">{en?'Last updated: September 9, 2026':'Última actualización: 9 de septiembre de 2026'}</p>
+      <p className="policy-updated">{en?'Last updated: September 10, 2026':'Última actualización: 10 de septiembre de 2026'}</p>
       {en?<>
         <h2>Contact and privacy enquiries</h2>
         <p>For technical support or privacy enquiries, contact UtilityInstant at <a href="mailto:utilityinstant2026@mail.com">utilityinstant2026@mail.com</a>.</p>
         <h2>What data do the tools process?</h2>
         <p>The calculators, converters and text tools process the information you enter in your browser. We do not create user accounts or store your inputs, results or generated passwords on our servers.</p>
         <p>Your browser may save preferences, favourite tools and recently used tools locally on your device. Normal technical information, such as the IP address and requested page, may be processed by the hosting provider to deliver and secure the site.</p>
+        <p>The password generator remembers its settings and the last five generated passwords in this browser, unencrypted. You can reveal, copy or delete this local history in the generator. The source phrase and the password entered in the checker are not saved.</p>
         <h2>Advertising and cookies</h2>
         <p>UtilityInstant may use Google AdSense to fund the free tools. Advertising cookies and similar technologies are used only according to your choices in the consent message. Google and its advertising partners may process information such as IP address, browser identifiers and device data to provide, measure and prevent abuse in advertising services.</p>
         <p>You can accept, reject or manage advertising consent in the privacy message. You can also change or withdraw your choice through the privacy and cookie settings link when available.</p>
@@ -36,6 +37,7 @@ export default async function PrivacyPage({params}:{params:Promise<{locale:strin
         <h2>¿Qué datos procesan las herramientas?</h2>
         <p>Las calculadoras, conversores y herramientas de texto procesan los datos que introduces en tu navegador. No creamos cuentas de usuario ni guardamos en nuestros servidores tus entradas, resultados o contraseñas generadas.</p>
         <p>El navegador puede guardar localmente tus preferencias, herramientas favoritas y herramientas recientes. El alojamiento puede procesar información técnica normal, como la dirección IP y la página solicitada, para entregar y proteger el sitio.</p>
+        <p>El generador de contraseñas recuerda su configuración y las últimas cinco contraseñas generadas en este navegador, sin cifrar. Puedes mostrar, copiar o borrar este historial local desde el generador. La frase de origen y la contraseña introducida en el comprobador no se guardan.</p>
         <h2>Publicidad y cookies</h2>
         <p>UtilityInstant puede utilizar Google AdSense para mantener gratuitas las herramientas. Las cookies publicitarias y tecnologías similares se utilizan según las opciones que elijas en el mensaje de consentimiento. Google y sus partners publicitarios pueden tratar datos como la dirección IP, identificadores del navegador y datos del dispositivo para prestar, medir y proteger sus servicios publicitarios.</p>
         <p>Puedes aceptar, rechazar o gestionar el consentimiento publicitario en el mensaje de privacidad. También podrás cambiar o retirar tu elección desde el enlace de configuración de privacidad y cookies cuando esté disponible.</p>
