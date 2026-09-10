@@ -28,7 +28,7 @@ export default async function PrivacyPage({params}:{params:Promise<{locale:strin
         <h2>Advertising and cookies</h2>
         <p>UtilityInstant may use Google AdSense to fund the free tools. Advertising cookies and similar technologies are used only according to your choices in the consent message. Google and its advertising partners may process information such as IP address, browser identifiers and device data to provide, measure and prevent abuse in advertising services.</p>
         <p>You can accept, reject or manage advertising consent in the privacy message. You can also change or withdraw your choice through the privacy and cookie settings link when available.</p>
-        <h2>Your rights</h2>
+        <h2>Analytics</h2><p>We use Google Analytics to measure visits and use of the site after the consent platform permits analytics storage. We do not send calculator inputs, results, passwords or uploaded files to Analytics. Google may process browser and device information and use analytics cookies. You can change your choice in the privacy message.</p><h2>Your rights</h2>
         <p>You may contact us to ask about your personal data or exercise the rights available under applicable law. We will respond through the contact address above.</p>
       </>:<>
         <h2>Contacto y consultas de privacidad</h2>
@@ -39,7 +39,7 @@ export default async function PrivacyPage({params}:{params:Promise<{locale:strin
         <h2>Publicidad y cookies</h2>
         <p>UtilityInstant puede utilizar Google AdSense para mantener gratuitas las herramientas. Las cookies publicitarias y tecnologías similares se utilizan según las opciones que elijas en el mensaje de consentimiento. Google y sus partners publicitarios pueden tratar datos como la dirección IP, identificadores del navegador y datos del dispositivo para prestar, medir y proteger sus servicios publicitarios.</p>
         <p>Puedes aceptar, rechazar o gestionar el consentimiento publicitario en el mensaje de privacidad. También podrás cambiar o retirar tu elección desde el enlace de configuración de privacidad y cookies cuando esté disponible.</p>
-        <h2>Tus derechos</h2>
+        <h2>Analítica</h2><p>Utilizamos Google Analytics para medir visitas y uso de la web cuando la plataforma de consentimiento permite el almacenamiento analítico. No enviamos entradas de calculadoras, resultados, contraseñas ni archivos importados a Analytics. Google puede tratar información del navegador y dispositivo y utilizar cookies analíticas. Puedes cambiar tu elección en el mensaje de privacidad.</p><h2>Tus derechos</h2>
         <p>Puedes escribirnos para consultar tus datos personales o ejercer los derechos que correspondan según la legislación aplicable. Responderemos en la dirección de contacto indicada.</p>
       </>}
       <p className="policy-note">{en?'This policy may be updated when the site adds a new provider or processing purpose.':'Esta política se actualizará si el sitio incorpora un nuevo proveedor o finalidad de tratamiento.'}</p>

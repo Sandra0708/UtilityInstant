@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {permitsAnalytics,startAnalytics,analyticsPageView,measurementId} from '../lib/analytics.ts';
+test('Analytics waits for CMP permission and excludes input data',()=>{
+ const enums={CONSENT_MODE_PURPOSE_STATUS_GRANTED:1,CONSENT_MODE_PURPOSE_STATUS_NOT_APPLICABLE:3};
+ for(const status of [undefined,0,2,4])assert.equal(permitsAnalytics({analyticsStoragePurposeConsentStatus:status},enums),false);
+ let status=2;const scripts=[];
+ globalThis.window={location:{pathname:'/en'},googlefc:{callbackQueue:[],ConsentModePurposeStatusEnum:enums,getGoogleConsentModeValues:()=>({analyticsStoragePurposeConsentStatus:status})}};
+ globalThis.document={createElement:()=>({}),head:{appendChild:s=>scripts.push(s)}};
+ startAnalytics();startAnalytics();
+ const callback=window.googlefc.callbackQueue[0].CONSENT_MODE_DATA_READY;
+ assert.equal(scripts.length,0);callback();assert.equal(scripts.length,0);
+ status=1;callback();assert.equal(scripts.length,1);callback();assert.equal(scripts.length,1);
+ analyticsPageView('/en/tools/mortgage');analyticsPageView('/en/tools/mortgage');
+ const events=window.dataLayer.map(x=>Array.from(x)).filter(x=>x[0]==='event');
+ assert.equal(events.length,2);assert.equal(events[1][2].page_location,'https://utilityinstant.com/en/tools/mortgage');
+ status=2;callback();analyticsPageView('/es');assert.equal(window[`ga-disable-${measurementId}`],true);
+ assert.equal(window.dataLayer.map(x=>Array.from(x)).filter(x=>x[0]==='event').length,2);
+ delete globalThis.window;delete globalThis.document;
+});
