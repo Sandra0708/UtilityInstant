@@ -1,13 +1,13 @@
 'use client';
 import { createContext,useContext,useEffect,useState,type ReactNode } from 'react';
-import {Globe2,Sun,Moon,SlidersHorizontal,Heart,History,ArrowUpRight,Search,ShieldCheck,Calculator,Landmark,Percent,CalendarDays,ArrowLeftRight,Type,Code2,TrendingUp,Tag,KeyRound,Braces,FileText,BarChart3,X} from 'lucide-react';
+import {Truck,Globe2,Sun,Moon,SlidersHorizontal,Heart,History,ArrowUpRight,Search,ShieldCheck,Calculator,Landmark,Percent,CalendarDays,ArrowLeftRight,Type,Code2,TrendingUp,Tag,KeyRound,Braces,FileText,BarChart3,X} from 'lucide-react';
 import {Select,SelectTrigger,SelectValue,SelectContent,SelectItem} from '@/components/ui/select';
 import {Dialog,DialogTrigger,DialogContent,DialogTitle,DialogDescription,DialogClose} from '@/components/ui/dialog';
 import {Tabs,TabsList,TabsTrigger} from '@/components/ui/tabs';
 import {categories,tools,searchTools,type Locale,type Tool} from '@/lib/tools';
 import {AdSlot} from './ads';
 import {Fragment} from 'react';
-export const icons:Record<string,typeof Search>={Landmark,Calculator,ArrowLeftRight,CalendarDays,Type,Code2,mortgage:Landmark,loan:Landmark,compound:TrendingUp,percentage:Percent,discount:Tag,vat:Percent,length:ArrowLeftRight,weight:ArrowLeftRight,temperature:ArrowLeftRight,date:CalendarDays,age:CalendarDays,words:Type,json:Braces,password:KeyRound,mean:BarChart3,base64:Code2};
+export const icons:Record<string,typeof Search>={Truck,cargo:Truck,Landmark,Calculator,ArrowLeftRight,CalendarDays,Type,Code2,mortgage:Landmark,loan:Landmark,compound:TrendingUp,percentage:Percent,discount:Tag,vat:Percent,length:ArrowLeftRight,weight:ArrowLeftRight,temperature:ArrowLeftRight,date:CalendarDays,age:CalendarDays,words:Type,json:Braces,password:KeyRound,mean:BarChart3,base64:Code2};
 type Prefs={currency:string;number:string;time:string;zone:string;units:string;theme:string};
 const base:Prefs={currency:'EUR',number:'es-ES',time:'24',zone:'local',units:'metric',theme:'light'};
 type State={prefs:Prefs;setPrefs:(p:Prefs)=>void;favorites:string[];toggle:(id:string)=>void;history:{id:string;date:number}[];record:(id:string)=>void;clear:()=>void};
