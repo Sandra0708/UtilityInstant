@@ -17,9 +17,11 @@ test('reserved zones never contain pallets; overlapping zones are counted once',
  assert.ok(Math.abs(r.freeFloor+r.floor+r.reservedFloor-space.width*space.length/1e6)<.001);
  assert.throws(()=>planCargo({...space,zones:[{...zones[0],x:space.width}]},[defaultCargo]));
 });
-test('operational stacking requires weight, top-load capacity and height/base stability',()=>{
+test('stacking honours selected levels and optional load and stability limits',()=>{
  const space={...defaultSpace,length:1300,width:900,height:4000};const item={...defaultCargo,quantity:3,weight:500,levels:3};
- assert.equal(planCargo(space,[item]).placed.length,1);
+ assert.equal(planCargo(space,[item]).placed.length,3);
+ assert.equal(planCargo(space,[{...item,weight:0}]).placed.length,3);
+ assert.equal(planCargo(space,[{...item,topLoad:0}]).placed.length,1);
  assert.equal(planCargo(space,[{...item,topLoad:500}]).placed.length,2);
  assert.equal(planCargo({...space,maxStackRatio:2},[{...item,topLoad:1000}]).placed.length,1);
  const r=compareCargo({...space,maxWeight:900},[{...item,topLoad:1000}]);assert.equal(r.geometricCount,3);assert.equal(r.placed.length,1);

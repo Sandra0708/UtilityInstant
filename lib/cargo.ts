@@ -91,8 +91,8 @@ function attempt(space:Space,items:Cargo[],order:number,orientation:number){
    if(!best||score<best.score)best={r,w,l,rotated,score};}}
   if(!best)break;
   let levels=Math.min(remaining,item.levels,Math.floor((space.height+eps)/item.height));
-  // Unknown weight or stacking resistance must not silently permit a stack.
-  levels=Math.min(levels,item.weight>0?1+Math.floor(((item.topLoad||0)+eps)/item.weight):1);
+  // Levels authorise geometric stacking. An optional declared load limit adds a check.
+  if(item.topLoad!==undefined)levels=Math.min(levels,item.weight>0?1+Math.floor((item.topLoad+eps)/item.weight):1);
   if(space.maxStackRatio)levels=Math.min(levels,Math.floor(Math.min(item.width,item.length)*space.maxStackRatio/item.height+eps));
   if(space.maxWeight>0&&item.weight>0)levels=Math.min(levels,Math.floor((space.maxWeight-weight+eps)/item.weight));
   if(levels<1)break;
