@@ -1,0 +1,100 @@
+<!doctype html>
+<!--
+  Dev-only harness to test content.js field detection outside a real
+  extension context. NOT part of the shipped extension. Stubs
+  chrome.storage.local (in-memory) + chrome.storage.onChanged so
+  content.js runs unmodified.
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Content script test page</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 480px; margin: 40px auto; background: #f5f6f8; }
+  fieldset { margin-bottom: 28px; padding: 16px; }
+  label { display: block; margin: 10px 0 4px; }
+  input { display: block; width: 100%; padding: 8px; box-sizing: border-box; }
+  #controls { margin-bottom: 20px; }
+  #dynamicHost {}
+</style>
+<script>
+  (function () {
+    var mem = { 'uip.fieldDetection.v1': true };
+    var listeners = [];
+    window.chrome = {
+      runtime: { lastError: null },
+      storage: {
+        onChanged: { addListener: function (fn) { listeners.push(fn); } },
+        local: {
+          get: function (keys, cb) {
+            var result = {};
+            if (typeof keys === 'string') { if (keys in mem) result[keys] = mem[keys]; }
+            else { Object.keys(mem).forEach(function (k) { result[k] = mem[k]; }); }
+            setTimeout(function () { cb(result); }, 0);
+          },
+          set: function (items, cb) {
+            var changes = {};
+            Object.keys(items).forEach(function (k) {
+              changes[k] = { oldValue: mem[k], newValue: items[k] };
+              mem[k] = items[k];
+            });
+            setTimeout(function () {
+              if (cb) cb();
+              listeners.forEach(function (fn) { fn(changes, 'local'); });
+            }, 0);
+          },
+        },
+      },
+    };
+    window.__setFieldDetection = function (value) {
+      window.chrome.storage.local.set({ 'uip.fieldDetection.v1': value }, function () {});
+    };
+  })();
+</script>
+</head>
+<body>
+<h1>Content script manual test page</h1>
+<div id="controls">
+  <button type="button" onclick="window.__setFieldDetection(true)">Enable detection</button>
+  <button type="button" onclick="window.__setFieldDetection(false)">Disable detection</button>
+  <button type="button" id="addDynamicBtn">Add dynamic signup form</button>
+</div>
+
+<fieldset>
+  <legend>Plain login</legend>
+  <label for="loginPassword">Password</label>
+  <input id="loginPassword" name="password" type="password" autocomplete="current-password">
+</fieldset>
+
+<form id="signupForm">
+  <fieldset>
+    <legend>Signup form (password + confirm)</legend>
+    <label for="signupPassword">New password</label>
+    <input id="signupPassword" name="new-password" type="password" autocomplete="new-password">
+    <label for="signupConfirm">Confirm password</label>
+    <input id="signupConfirm" name="confirm-password" type="password" autocomplete="new-password">
+  </fieldset>
+</form>
+
+<div id="dynamicHost"></div>
+
+<script>
+  document.getElementById('addDynamicBtn').addEventListener('click', function () {
+    var host = document.getElementById('dynamicHost');
+    if (host.querySelector('input[type=password]')) return;
+    var wrap = document.createElement('fieldset');
+    wrap.innerHTML = '<legend>Dynamically loaded form</legend>' +
+      '<label for="dynPassword">Change password</label>' +
+      '<input id="dynPassword" name="dyn-password" type="password" autocomplete="new-password">' +
+      '<label for="dynConfirm">Repeat new password</label>' +
+      '<input id="dynConfirm" name="dyn-confirm" type="password" autocomplete="new-password">';
+    host.appendChild(wrap);
+  });
+</script>
+
+<script src="../lib/generator.js"></script>
+<script src="../lib/storage.js"></script>
+<script src="../lib/i18n.js"></script>
+<script src="../content.js"></script>
+</body>
+</html>

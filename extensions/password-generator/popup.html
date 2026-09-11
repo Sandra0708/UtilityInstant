@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="dark light">
+<title>UtilityInstant Passwords</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<div class="popup" id="app">
+  <header class="head">
+    <div class="brand">
+      <img src="icons/icon32.png" alt="" width="22" height="22" class="brandmark">
+      <div class="brand-text">
+        <strong id="appName">UtilityInstant</strong>
+        <span id="appSubtitle" class="muted">Generador de contraseñas</span>
+      </div>
+    </div>
+    <label class="lang-switch">
+      <span id="languageLabel" class="sr-only">Idioma</span>
+      <select id="langSelect" class="picker" aria-label="Idioma / Language">
+        <option value="auto">Auto</option>
+        <option value="es">ES</option>
+        <option value="en">EN</option>
+      </select>
+    </label>
+  </header>
+
+  <form id="generatorForm" class="panel">
+    <div class="row two-col">
+      <label class="field">
+        <span id="lengthLabel">Longitud</span>
+        <input type="number" id="length" min="8" max="128" step="1" required>
+      </label>
+      <label class="field">
+        <span id="countLabel">Cantidad</span>
+        <input type="number" id="count" min="1" max="50" step="1" required>
+      </label>
+    </div>
+
+    <div class="row checks">
+      <label><input type="checkbox" id="uppercase"><span id="uppercaseLabel">Mayúsculas</span></label>
+      <label><input type="checkbox" id="lowercase"><span id="lowercaseLabel">Minúsculas</span></label>
+      <label><input type="checkbox" id="numbers"><span id="numbersLabel">Números</span></label>
+      <label><input type="checkbox" id="symbols"><span id="symbolsLabel">Símbolos</span></label>
+    </div>
+    <p id="groupError" class="error" role="alert" hidden></p>
+
+    <label class="row check-row">
+      <input type="checkbox" id="edgeSymbols">
+      <span id="edgeSymbolsLabel">Permitir símbolos al principio y al final</span>
+    </label>
+
+    <label class="field">
+      <span id="modeLabel">Modo</span>
+      <select id="mode" class="picker">
+        <option value="random" id="modeRandomOption">Aleatoria</option>
+        <option value="phrase" id="modePhraseOption">Desde palabra o frase</option>
+      </select>
+    </label>
+
+    <label class="field" id="phraseField" hidden>
+      <span id="phraseLabel">Palabra o frase (opcional)</span>
+      <input type="text" id="phrase" autocomplete="off" maxlength="200">
+      <small id="phraseHint" class="hint"></small>
+    </label>
+
+    <details class="advanced">
+      <summary id="customizeLabel">Personalizar caracteres</summary>
+      <label class="field">
+        <span id="allowedSymbolsLabel">Símbolos permitidos</span>
+        <input type="text" id="symbolSet" maxlength="60" autocomplete="off">
+      </label>
+      <label class="field">
+        <span id="excludeLabel">Excluir caracteres (por ejemplo O0Il1)</span>
+        <input type="text" id="exclude" maxlength="100" autocomplete="off">
+      </label>
+    </details>
+
+    <p id="generateError" class="error" role="alert" hidden></p>
+    <button type="submit" class="primary-button" id="generateBtn">Generar</button>
+  </form>
+
+  <section class="panel">
+    <div class="row heading-row">
+      <h2 id="yourPasswordsLabel">Tus contraseñas</h2>
+      <button type="button" class="small-button" id="regenerateBtn" hidden>Regenerar</button>
+    </div>
+    <ul id="resultsList" class="results-list" hidden></ul>
+    <p id="resultsEmpty" class="muted">Pulsa Generar para comenzar.</p>
+    <div class="row results-actions" id="resultsActions" hidden>
+      <button type="button" class="secondary-button" id="copyAllBtn">Copiar todas</button>
+    </div>
+    <p class="hint" id="localNote">Generadas en tu dispositivo. Nunca se envían a ningún servidor.</p>
+  </section>
+
+  <section class="panel">
+    <div class="row heading-row">
+      <h2 id="historyLabel">Últimas 5 contraseñas</h2>
+      <span class="spacer"></span>
+      <button type="button" class="small-button" id="toggleHistoryBtn">Mostrar</button>
+      <button type="button" class="small-button" id="clearHistoryBtn">Borrar historial</button>
+    </div>
+    <p class="hint" id="historyHint">Se guardan sin cifrar solo en este navegador.</p>
+    <ul id="historyList" class="history-list"></ul>
+    <p id="historyEmpty" class="muted">Aún no hay contraseñas guardadas.</p>
+  </section>
+
+  <section class="panel">
+    <h2 id="fieldDetectionTitle">Detección de campos de contraseña</h2>
+    <label class="row check-row">
+      <input type="checkbox" id="fieldDetectionToggle">
+      <span id="fieldDetectionToggleLabel">Mostrar botón para insertar contraseña en formularios</span>
+    </label>
+    <p class="hint" id="fieldDetectionHint"></p>
+  </section>
+
+  <p role="status" id="notice" class="notice"></p>
+
+  <footer class="foot">
+    <a id="moreToolsLink" class="text-button" href="https://utilityinstant.com/es/tools/password" target="_blank" rel="noopener noreferrer">
+      <span id="moreToolsLabel">Más utilidades en UtilityInstant</span>
+    </a>
+  </footer>
+</div>
+<script src="lib/generator.js"></script>
+<script src="lib/storage.js"></script>
+<script src="lib/i18n.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

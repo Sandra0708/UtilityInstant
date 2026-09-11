@@ -1,0 +1,11 @@
+{
+  "name": "utilityinstant-password-extension",
+  "private": true,
+  "version": "1.0.0",
+  "type": "commonjs",
+  "description": "Manifest V3 browser extension for UtilityInstant's password generator. Independent of the main web app's package.json (kept as CommonJS so lib/generator.js loads both as a classic extension script and via Node's test runner).",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "icons": "python tools/make_icons.py"
+  }
+}

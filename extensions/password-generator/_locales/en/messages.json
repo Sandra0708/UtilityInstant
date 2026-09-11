@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "UtilityInstant – Password Generator",
+    "description": "Extension name shown in chrome://extensions"
+  },
+  "extDescription": {
+    "message": "Generate secure passwords on your device and insert them into sign-up forms. No server calls, no analytics.",
+    "description": "Short extension description"
+  }
+}
