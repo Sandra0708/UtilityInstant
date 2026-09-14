@@ -1,6 +1,6 @@
-import {translatedCopy} from './localization/index.ts';
-export type Locale = 'es' | 'en';
-export type Copy = { es: string; en: string };
+import {translatedCopy,type Language} from './localization/index.ts';
+export type Locale = Language;
+export type Copy = Record<Locale,string>;
 export const bi = (es:string,en:string):Copy => translatedCopy(es,en);
 export type Field = {id:string;label:Copy;type:'number'|'date'|'text'|'textarea'|'select'|'checkbox';value:string;min?:number;max?:number;step?:number;options?:string[];unit?:string;required?:boolean};
 export type Tool = {id:string;category:string;title:Copy;description:Copy;fields:Field[];formula:string;explanation:Copy;limitations:Copy;example:Copy;aliases:string[];exportable:boolean;compare:boolean;related:string[];source?:string};
@@ -36,5 +36,5 @@ export const getTool=(id:string)=>tools.find(t=>t.id===id);
 export const defaults=(tool:Tool)=>Object.fromEntries(tool.fields.map(f=>[f.id,f.value]));
 const normal=(s:string)=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
 function distance(a:string,b:string){let prev=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){const row=[i];for(let j=1;j<=b.length;j++)row[j]=Math.min(row[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=row;}return prev[b.length];}
-export function searchTools(query:string){const q=normal(query).slice(0,150);if(!q)return tools;return tools.map(t=>{const title=normal(t.title.es+' '+t.title.en);const hay=normal(title+' '+t.description.es+' '+t.description.en+' '+t.aliases.join(' ')+' '+categories.find(c=>c.id===t.category)?.title.es+' '+t.category);const score=title.includes(q)?100:hay.includes(q)?80:q.split(/\s+/).every(w=>hay.includes(w))?60:hay.split(/\s+/).some(w=>q.length>=4&&distance(q,w)<=1)?30:0;return {t,score};}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).map(x=>x.t);}
+export function searchTools(query:string,locale:Locale='es'){const q=normal(query).slice(0,150);if(!q)return tools;return tools.map(t=>{const title=normal(t.title[locale]+' '+t.title.es+' '+t.title.en);const hay=normal(title+' '+t.description[locale]+' '+t.description.es+' '+t.description.en+' '+t.aliases.join(' ')+' '+categories.find(c=>c.id===t.category)?.title[locale]+' '+t.category);const score=title.includes(q)?100:hay.includes(q)?80:q.split(/\s+/).every(w=>hay.includes(w))?60:hay.split(/\s+/).some(w=>q.length>=4&&distance(q,w)<=1)?30:0;return {t,score};}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).map(x=>x.t);}
 

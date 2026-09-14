@@ -1,18 +1,9 @@
-const spanishCountries = new Set(['ES','MX','AR','CO','CL','PE','VE','UY','PY','BO','EC','CR','PA','DO','GT','HN','SV','NI','CU','PR','GQ']);
-
-// Country is supplied by the hosting edge, without calling a geolocation service.
-export function preferredLocale(country?: string, acceptLanguage = ''): 'en' | 'es' {
-  const code = country?.toUpperCase();
-  if (code && /^[A-Z]{2}$/.test(code) && code !== 'XX') {
-    return spanishCountries.has(code) ? 'es' : 'en';
-  }
-  const languages = acceptLanguage.toLowerCase().split(',').map((entry, index) => {
-    const [tag, ...parameters] = entry.trim().split(';');
-    const quality = parameters.find(parameter => parameter.trim().startsWith('q='));
-    const weight = quality ? Number(quality.trim().slice(2)) : 1;
-    return {language: tag.split('-')[0], weight, index};
-  }).filter(entry => Number.isFinite(entry.weight) && entry.weight > 0 && entry.weight <= 1)
-    .sort((a, b) => b.weight - a.weight || a.index - b.index);
-  const supported = languages.find(entry => entry.language === 'en' || entry.language === 'es');
-  return supported?.language === 'es' ? 'es' : 'en';
+import {browserLanguage,type Language} from './localization/languages.ts';
+// Browser preference precedes the hosting country; no geolocation request.
+export function preferredLocale(country?:string,acceptLanguage=''):Language {
+ if(acceptLanguage.trim())return browserLanguage(acceptLanguage);
+ const c=country?.toUpperCase()||'';
+ if(['ES','MX','AR','CO','CL','PE','VE','UY','PY','BO','EC','CR','PA','DO','GT','HN','SV','NI','CU','PR','GQ'].includes(c))return 'es';
+ if(['DE','AT','LI'].includes(c))return 'de';
+ if(c==='JP')return 'ja';if(c==='FR')return 'fr';if(c==='NL')return 'nl';if(c==='IT')return 'it';if(['PT','BR'].includes(c))return 'pt';return 'en';
 }

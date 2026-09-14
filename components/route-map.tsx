@@ -1,9 +1,12 @@
 'use client';
+import {translate,type Language} from '@/lib/localization';
+
 import {useState} from 'react';
 import s from './route-workspace.module.css';
 
-export default function RouteMap({origin,stops,en}:{origin:string;stops:{name:string}[];en:boolean}){
- const t=(es:string,english:string)=>en?english:es;
+export default function RouteMap({origin,stops,en:language}:{origin:string;stops:{name:string}[];en:boolean|Language}){
+ const locale=typeof language==='boolean'?(language?'en':'es'):language;const en=locale==='en';
+ const t=(es:string,english:string)=>translate(locale,es,english);
  const key=process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY?.trim();
  const [leg,setLeg]=useState('all'),[shown,setShown]=useState(''),[avoid,setAvoid]=useState(false);
  const index=Number(leg);
@@ -12,7 +15,7 @@ export default function RouteMap({origin,stops,en}:{origin:string;stops:{name:st
  const to=all?stops.at(-1)?.name||'':stops[index]?.name||'';
  const via=all?stops.slice(0,-1).map(p=>p.name):[];
  const ready=!!from.trim()&&!!to.trim()&&via.every(p=>!!p.trim())&&via.length<=20;
- const params=new URLSearchParams({origin:from,destination:to,mode:'driving',language:en?'en':'es'});
+ const params=new URLSearchParams({origin:from,destination:to,mode:'driving',language:locale});
  if(via.length)params.set('waypoints',via.join('|'));
  if(avoid)params.set('avoid','tolls');
  if(key)params.set('key',key);

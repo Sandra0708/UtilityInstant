@@ -1,3 +1,6 @@
+import {privacyContent} from '@/lib/localization/privacy';
+import {isLanguage} from '@/lib/localization';
+import {translate,type Language} from '@/lib/localization';
 import {notFound} from 'next/navigation';
 import {Brand} from '@/components/platform';
 import {alternate} from '@/lib/seo';
@@ -5,48 +8,22 @@ import type {Locale} from '@/lib/tools';
 
 export async function generateMetadata({params}:{params:Promise<{locale:string}>}){
   const {locale}=await params;
-  if(locale!=='es'&&locale!=='en')return {};
-  return {title:locale==='es'?'Política de privacidad · UtilityInstant':'Privacy policy · UtilityInstant',robots:{index:false,follow:true},alternates:alternate(locale,'/privacy')};
+  if(!isLanguage(locale))return {};
+  return {title:translate(locale,"Política de privacidad · UtilityInstant","Privacy policy · UtilityInstant"),robots:{index:false,follow:true},alternates:alternate(locale,'/privacy')};
 }
 
 export default async function PrivacyPage({params}:{params:Promise<{locale:string}>}){
   const {locale}=await params;
-  if(locale!=='es'&&locale!=='en')notFound();
+  if(!isLanguage(locale))notFound();
   const en=locale==='en';
   return <main className="policy-page" id="main">
-    <header className="policy-header"><Brand locale={locale as Locale}/><a href={`/${locale}`}>{en?'Back to tools':'Volver a las herramientas'}</a></header>
+    <header className="policy-header"><Brand locale={locale as Locale}/><a href={`/${locale}`}>{translate(locale,"Volver a las herramientas","Back to tools")}</a></header>
     <article className="policy-content">
-      <p className="eyebrow">{en?'PRIVACY AND COOKIES':'PRIVACIDAD Y COOKIES'}</p>
-      <h1>{en?'Privacy policy':'Política de privacidad'}</h1>
-      <p className="policy-updated">{en?'Last updated: September 10, 2026':'Última actualización: 10 de septiembre de 2026'}</p>
-      {en?<>
-        <h2>Contact and privacy enquiries</h2>
-        <p>For technical support or privacy enquiries, contact UtilityInstant at <a href="mailto:utilityinstant2026@mail.com">utilityinstant2026@mail.com</a>.</p>
-        <h2>What data do the tools process?</h2>
-        <p>The calculators, converters and text tools process the information you enter in your browser. We do not create user accounts or store your inputs, results or generated passwords on our servers.</p>
-        <p>Your browser may save preferences, favourite tools and recently used tools locally on your device. Normal technical information, such as the IP address and requested page, may be processed by the hosting provider to deliver and secure the site.</p>
-        <p>The password generator remembers its settings and the last five generated passwords in this browser, unencrypted. You can reveal, copy or delete this local history in the generator. The source phrase and the password entered in the checker are not saved.</p>
-        <p>The load planner saves its last five calculations, including space dimensions, reserved zones and pallet quantities and weights, only in this browser. You can reopen or delete them from the tool.</p>
-        <h2>Advertising and cookies</h2>
-        <p>UtilityInstant may use Google AdSense to fund the free tools. Advertising cookies and similar technologies are used only according to your choices in the consent message. Google and its advertising partners may process information such as IP address, browser identifiers and device data to provide, measure and prevent abuse in advertising services.</p>
-        <p>You can accept, reject or manage advertising consent in the privacy message. You can also change or withdraw your choice through the privacy and cookie settings link when available.</p>
-        <h2>Analytics</h2><p>We use Google Analytics to measure visits and use of the site after the consent platform permits analytics storage. We do not send calculator inputs, results, passwords or uploaded files to Analytics. Google may process browser and device information and use analytics cookies. You can change your choice in the privacy message.</p><h2>Your rights</h2>
-        <p>You may contact us to ask about your personal data or exercise the rights available under applicable law. We will respond through the contact address above.</p>
-      </>:<>
-        <h2>Contacto y consultas de privacidad</h2>
-        <p>Para soporte técnico o consultas de privacidad, escribe a UtilityInstant en <a href="mailto:utilityinstant2026@mail.com">utilityinstant2026@mail.com</a>.</p>
-        <h2>¿Qué datos procesan las herramientas?</h2>
-        <p>Las calculadoras, conversores y herramientas de texto procesan los datos que introduces en tu navegador. No creamos cuentas de usuario ni guardamos en nuestros servidores tus entradas, resultados o contraseñas generadas.</p>
-        <p>El navegador puede guardar localmente tus preferencias, herramientas favoritas y herramientas recientes. El alojamiento puede procesar información técnica normal, como la dirección IP y la página solicitada, para entregar y proteger el sitio.</p>
-        <p>El generador de contraseñas recuerda su configuración y las últimas cinco contraseñas generadas en este navegador, sin cifrar. Puedes mostrar, copiar o borrar este historial local desde el generador. La frase de origen y la contraseña introducida en el comprobador no se guardan.</p>
-        <p>El planificador de carga guarda sus últimos cinco cálculos, incluidas las dimensiones del espacio, las zonas reservadas y las cantidades y pesos de los palets, solo en este navegador. Puedes recuperarlos o borrarlos desde la herramienta.</p>
-        <h2>Publicidad y cookies</h2>
-        <p>UtilityInstant puede utilizar Google AdSense para mantener gratuitas las herramientas. Las cookies publicitarias y tecnologías similares se utilizan según las opciones que elijas en el mensaje de consentimiento. Google y sus partners publicitarios pueden tratar datos como la dirección IP, identificadores del navegador y datos del dispositivo para prestar, medir y proteger sus servicios publicitarios.</p>
-        <p>Puedes aceptar, rechazar o gestionar el consentimiento publicitario en el mensaje de privacidad. También podrás cambiar o retirar tu elección desde el enlace de configuración de privacidad y cookies cuando esté disponible.</p>
-        <h2>Analítica</h2><p>Utilizamos Google Analytics para medir visitas y uso de la web cuando la plataforma de consentimiento permite el almacenamiento analítico. No enviamos entradas de calculadoras, resultados, contraseñas ni archivos importados a Analytics. Google puede tratar información del navegador y dispositivo y utilizar cookies analíticas. Puedes cambiar tu elección en el mensaje de privacidad.</p><h2>Tus derechos</h2>
-        <p>Puedes escribirnos para consultar tus datos personales o ejercer los derechos que correspondan según la legislación aplicable. Responderemos en la dirección de contacto indicada.</p>
-      </>}
-      <p className="policy-note">{en?'This policy may be updated when the site adds a new provider or processing purpose.':'Esta política se actualizará si el sitio incorpora un nuevo proveedor o finalidad de tratamiento.'}</p>
+      <p className="eyebrow">{translate(locale,"PRIVACIDAD Y COOKIES","PRIVACY AND COOKIES")}</p>
+      <h1>{translate(locale,"Política de privacidad","Privacy policy")}</h1>
+      <p className="policy-updated">{translate(locale,"Última actualización: 10 de septiembre de 2026","Last updated: September 10, 2026")}</p>
+      {privacyContent(locale).map(([tag,text],i)=>tag==='h2'?<h2 key={i}>{text}</h2>:<p key={i}>{text.split('utilityinstant2026@mail.com').map((part,j)=><span key={j}>{j>0&&<a href="mailto:utilityinstant2026@mail.com">utilityinstant2026@mail.com</a>}{part}</span>)}</p>)}
+      <p className="policy-note">{translate(locale,"Esta política se actualizará si el sitio incorpora un nuevo proveedor o finalidad de tratamiento.","This policy may be updated when the site adds a new provider or processing purpose.")}</p>
     </article>
   </main>;
 }

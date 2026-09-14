@@ -1,16 +1,19 @@
 'use client';
+import {translate,type Language} from '@/lib/localization';
+
 import {useEffect,useState} from 'react';
 import {generatePasswords,passwordDefaults,type PasswordOptions} from '@/lib/passwords';
 import s from './data-tools.module.css';
 const settingsKey='utilityinstant.password.settings.v1',historyKey='utilityinstant.password.history.v1';
-export default function PasswordWorkspace({en}:{en:boolean}) {
- const t=(es:string,english:string)=>en?english:es;
+export default function PasswordWorkspace({en:language}:{en:boolean|Language}) {
+ const locale=typeof language==='boolean'?(language?'en':'es'):language;const en=locale==='en';
+ const t=(es:string,english:string)=>translate(locale,es,english);
  const [options,setOptions]=useState({...passwordDefaults}),[phrase,setPhrase]=useState(''),[output,setOutput]=useState<string[]>([]),[history,setHistory]=useState<string[]>([]),[ready,setReady]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState(''),[reveal,setReveal]=useState(false),[check,setCheck]=useState('');
  useEffect(()=>{try{const saved=JSON.parse(localStorage.getItem(settingsKey)||'null');if(saved&&typeof saved==='object')setOptions(old=>Object.fromEntries(Object.entries(old).map(([k,v])=>[k,typeof saved[k]===typeof v?saved[k]:v])) as PasswordOptions);const h=JSON.parse(localStorage.getItem(historyKey)||'[]');if(Array.isArray(h))setHistory(h.filter(x=>typeof x==='string'&&x.length<=128).slice(0,5));}catch{}setReady(true);},[]);
  useEffect(()=>{if(ready)try{localStorage.setItem(settingsKey,JSON.stringify(options));}catch{setNotice(t('No se pueden guardar preferencias en este navegador.','Preferences cannot be saved in this browser.'));}},[options,ready]);
  function change<K extends keyof PasswordOptions>(key:K,value:PasswordOptions[K]){setOptions(o=>({...o,[key]:value}));setError('');}
  async function copy(value:string){try{await navigator.clipboard.writeText(value);setNotice(t('Copiado.','Copied.'));}catch{setNotice(t('No se pudo copiar; selecciona el texto.','Could not copy; select the text.'));}}
- function generate(){try{const passwords=generatePasswords(options,phrase,en);setOutput(passwords);const next=[...passwords].reverse().concat(history).slice(0,5);setHistory(next);try{localStorage.setItem(historyKey,JSON.stringify(next));}catch{setNotice(t('Historial disponible solo hasta cerrar esta página.','History available until this page closes.'));}setError('');}catch(e){setError((e as Error).message);}}
+ function generate(){try{const passwords=generatePasswords(options,phrase,locale);setOutput(passwords);const next=[...passwords].reverse().concat(history).slice(0,5);setHistory(next);try{localStorage.setItem(historyKey,JSON.stringify(next));}catch{setNotice(t('Historial disponible solo hasta cerrar esta página.','History available until this page closes.'));}setError('');}catch(e){setError((e as Error).message);}}
  const common=/password|contrase[nñ]a|qwerty|123456|letmein|^(.)\1+$/i.test(check),groups=[/[a-z]/,/[A-Z]/,/\d/,/[^a-z0-9]/i].filter(r=>r.test(check)).length;
  const score=common?0:Math.min(4,Math.floor(check.length/5)+(groups>2?1:0));
  return <div className={s.surface}><div className={s.two}><form className={s.panel} onSubmit={e=>{e.preventDefault();generate();}}><h2>{t('Crea tus contraseñas','Create your passwords')}</h2><div className={s.controls}>

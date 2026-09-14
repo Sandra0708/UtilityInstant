@@ -1,8 +1,9 @@
+import {translate,type Language} from './localization/index.ts';
 export const passwordDefaults = {length:20,count:1,uppercase:true,lowercase:true,numbers:true,symbols:true,edgeSymbols:false,symbolSet:'!@#$%&*+-_',exclude:'',mode:'random' as 'random'|'phrase'};
 export type PasswordOptions = typeof passwordDefaults;
 function pick(n:number) { const limit = Math.floor(4294967296/n)*n; const data=new Uint32Array(1); do { crypto.getRandomValues(data); } while(data[0]>=limit); return data[0]%n; }
-export function generatePasswords(o:PasswordOptions,phrase='',en=false):string[] {
-  const fail=(es:string,english:string):never=>{throw Error(en?english:es);};
+export function generatePasswords(o:PasswordOptions,phrase='',language:boolean|Language=false):string[] {
+  const fail=(es:string,english:string):never=>{throw Error(translate(typeof language==='boolean'?(language?'en':'es'):language,es,english));};
   if(!Number.isInteger(o.length)||o.length<8||o.length>128||!Number.isInteger(o.count)||o.count<1||o.count>50) fail('Longitud: 8–128. Cantidad: 1–50.','Length: 8–128. Count: 1–50.');
   const clean=(s:string)=>[...new Set([...s].filter(c=>!o.exclude.includes(c)))].join('');
   const sets=[o.uppercase?'ABCDEFGHIJKLMNOPQRSTUVWXYZ':'',o.lowercase?'abcdefghijklmnopqrstuvwxyz':'',o.numbers?'0123456789':'',o.symbols?o.symbolSet:''].filter(Boolean).map(clean);
