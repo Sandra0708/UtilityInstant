@@ -3,6 +3,7 @@ import {useEffect,useState} from 'react';
 import {euCountries,planRoute,routeDefaults,stopDefault,routeDate,routeCalendar,routeSource,type RouteInput,type RoutePlan,type Stop,type RouteEvent} from '@/lib/routes';
 import {saveFile,delimited} from '@/lib/table-export';
 import s from './route-workspace.module.css';
+import RouteMap from './route-map';
 export default function RouteWorkspace({en}:{en:boolean}){
  const t=(es:string,english:string)=>en?english:es;
  const [input,setInput]=useState(routeDefaults),[result,setResult]=useState<RoutePlan|null>(null),[dirty,setDirty]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false),[sep,setSep]=useState(';'),[custom,setCustom]=useState('|'),[quote,setQuote]=useState('"');
@@ -46,6 +47,7 @@ export default function RouteWorkspace({en}:{en:boolean}){
  </div></details></section>)}
  <button type="button" className="secondary-button" disabled={input.stops.length>=25} onClick={()=>set({stops:[...input.stops.slice(0,-1),{...stopDefault,delivery:false},input.stops.at(-1)!]})}>{t('+ Añadir parada antes del destino','+ Add stop before destination')}</button>
  <p className={s.hint}>{t('Al añadir o reordenar paradas, revisa los km de cada tramo: no se recalculan solos. Google Maps puede proponer rutas para turismos; comprueba las restricciones de tu vehículo.','When adding or reordering stops, check each leg’s km: they are not recalculated automatically. Google Maps may suggest car routes; check your vehicle restrictions.')}</p>
+ <RouteMap origin={input.origin} stops={input.stops} en={en}/>
  <details><summary>{t('Horarios y presupuesto','Schedule and budget')}</summary><div className={s.grid}>
  {numeric(t('Carga en origen (min)','Loading at origin (min)'),input.load,v=>set({load:v}),0,1440)}
  {numeric(t('Horas por noche prevista','Hours per planned night'),input.nightHours,v=>set({nightHours:v}),8,24)}

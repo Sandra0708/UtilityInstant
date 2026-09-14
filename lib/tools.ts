@@ -1,6 +1,7 @@
+import {translatedCopy} from './localization/index.ts';
 export type Locale = 'es' | 'en';
 export type Copy = { es: string; en: string };
-export const bi = (es:string,en:string):Copy => ({es,en});
+export const bi = (es:string,en:string):Copy => translatedCopy(es,en);
 export type Field = {id:string;label:Copy;type:'number'|'date'|'text'|'textarea'|'select'|'checkbox';value:string;min?:number;max?:number;step?:number;options?:string[];unit?:string;required?:boolean};
 export type Tool = {id:string;category:string;title:Copy;description:Copy;fields:Field[];formula:string;explanation:Copy;limitations:Copy;example:Copy;aliases:string[];exportable:boolean;compare:boolean;related:string[];source?:string};
 export const categories = [
