@@ -16,8 +16,8 @@ export const privacySource=[
   ],
   [
     "p",
-    "Las calculadoras, conversores y herramientas de texto procesan los datos que introduces en tu navegador. No creamos cuentas de usuario ni guardamos en nuestros servidores tus entradas, resultados o contraseñas generadas.",
-    "The calculators, converters and text tools process the information you enter in your browser. We do not create user accounts or store your inputs, results or generated passwords on our servers."
+    "Las calculadoras, conversores y herramientas de texto procesan tus datos en el navegador. No creamos cuentas ni guardamos resultados o contraseñas en nuestros servidores. Al pulsar Mostrar lugares en el mapa, las direcciones se envían a nuestro servicio y a HeiGIT para localizarlas; se conservan temporalmente en memoria durante un máximo de 24 horas para evitar consultas repetidas. El navegador solicita las imágenes del mapa a OpenStreetMap, que recibe la dirección IP y la zona consultada.",
+    "Calculators, converters and text tools process your data in the browser. We do not create accounts or store results or passwords on our servers. When you select Show places on the map, addresses are sent to our service and HeiGIT to locate them; they are cached temporarily in memory for up to 24 hours to avoid repeated requests. Your browser requests map tiles from OpenStreetMap, which receives your IP address and the viewed area."
   ],
   [
     "p",
@@ -26,8 +26,8 @@ export const privacySource=[
   ],
   [
     "p",
-    "El generador de contraseñas recuerda su configuración y las últimas cinco contraseñas generadas en este navegador, sin cifrar. Puedes mostrar, copiar o borrar este historial local desde el generador. La frase de origen y la contraseña introducida en el comprobador no se guardan.",
-    "The password generator remembers its settings and the last five generated passwords in this browser, unencrypted. You can reveal, copy or delete this local history in the generator. The source phrase and the password entered in the checker are not saved."
+    "El generador recuerda su configuración. Solo guarda las últimas cinco contraseñas si activas Guardar en el historial de este navegador; esta opción está desactivada por defecto. El historial se guarda sin cifrar en este navegador y puedes mostrarlo, copiarlo o borrarlo. La frase de origen y la contraseña introducida en el comprobador no se guardan.",
+    "The generator remembers its settings. It only saves the last five passwords if you enable Save in this browser’s history; this option is off by default. History is stored unencrypted in this browser and you can reveal, copy or delete it. The source phrase and the password entered in the checker are not saved."
   ],
   [
     "p",

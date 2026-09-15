@@ -43,3 +43,6 @@ next-env.d.ts
 /.claude/
 /.codex/
 *.key
+
+.dev.vars
+.dev.vars.*

@@ -1,7 +1,7 @@
 export type FinanceId='mortgage'|'loan'|'compound'|'percentage'|'discount'|'vat';
 export type Inputs=Record<string,string>;
 export type Extra={period:number;amount:number};
-export type DebtOptions={principal:number;years:number;rate:number;frequency:number;system:'french'|'german'|'american';kind:'fixed'|'variable'|'mixed';fixedYears:number;index:number;spread:number;reviewMonths:number;ratePath:number[];grace:number;graceType:'interest'|'total';opening:number;openingPercent:number;annualFees:number;insurance:number;extraFee:number;extraMode:'payment'|'term';recurringExtra:number;extras:Extra[]};
+export type DebtOptions={principal:number;years:number;rate:number;frequency:number;system:'french'|'german'|'american';kind:'fixed'|'variable'|'mixed';fixedYears:number;index:number;spread:number;reviewMonths:number;ratePath:number[];grace:number;graceType:'interest'|'total';opening:number;openingPercent:number;annualFees:number;insurance:number;extraFee:number;extraMode:'payment'|'term';recurringExtra:number;extraFrequencyMonths?:number;extras:Extra[]};
 export type DebtRow={period:number;year:number;rate:number;opening:number;interest:number;capitalized:number;principal:number;extra:number;fees:number;insurance:number;payment:number;balance:number};
 const round=(n:number)=>Math.round((n+Number.EPSILON)*100)/100;
 const check=(n:number,min:number,max:number,label:string)=>{if(!Number.isFinite(n)||n<min||n>max)throw Error(label);return n;};
@@ -17,6 +17,8 @@ export function debtSchedule(o:DebtOptions){
  if(o.kind==='mixed'&&o.fixedYears>=o.years)throw Error('El tramo fijo debe ser menor que el plazo / Fixed phase must be shorter than term');
  if(o.ratePath.length>60||o.ratePath.some(n=>!Number.isFinite(n)||n< -20||n>100))throw Error('Escenario de índices / Index scenario');
  if(o.extras.length>100||o.extras.some(e=>!Number.isInteger(e.period)||e.period<1||e.period>total||!Number.isFinite(e.amount)||e.amount<0||e.amount>1e9))throw Error('Amortización extraordinaria / Extra repayment');
+ const paymentMonths=12/o.frequency,extraMonths=o.extraFrequencyMonths??paymentMonths;
+ check(extraMonths,1/52,720,'Frecuencia del extra / Extra frequency');
  let balance=round(o.principal),target=total,payment=0,principalStep=0,lastRate=-1,recalculate=true;
  const rows:DebtRow[]=[];
  for(let p=1;p<=target&&balance>.004;p++){
@@ -33,7 +35,9 @@ export function debtSchedule(o:DebtOptions){
    if(p===target)paidPrincipal=balance;
    balance=round(balance-paidPrincipal);
   }
-  const extra=round(Math.min(balance,o.recurringExtra+o.extras.filter(e=>e.period===p).reduce((n,e)=>n+e.amount,0)));balance=round(balance-extra);
+  // Contributions due between payment dates are accumulated until the next payment.
+  const extraCount=Math.floor(p*paymentMonths/extraMonths+1e-9)-Math.floor((p-1)*paymentMonths/extraMonths+1e-9);
+  const extra=round(Math.min(balance,o.recurringExtra*extraCount+o.extras.filter(e=>e.period===p).reduce((n,e)=>n+e.amount,0)));balance=round(balance-extra);
   if(extra>0&&!inGrace&&balance>0){
    if(o.extraMode==='payment')recalculate=true;
    else if(o.system!=='american'){

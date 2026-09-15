@@ -38,3 +38,5 @@
 @media(max-width:799px){.ad-page,.ad-page.tool-layout{padding-left:16px;padding-right:16px}.content-ad{margin:32px 0}.ad-slot>div{height:250px;max-height:100%}}
 
 .category-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px;min-width:0}.category-card h2{font-size:23px;margin:0 0 20px}.category-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.category-card-grid a{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:10px;padding:16px 10px;font-size:14px;min-width:0}.category-card-grid a:hover{background:var(--tint);color:var(--primary)}.category-card-grid a span{overflow-wrap:anywhere}@media(max-width:400px){.category-card{padding:16px}.category-card-grid{gap:8px}.category-card-grid a{padding:12px 6px;font-size:12px}}
+
+.result-note.example{padding:12px;border:1px solid var(--primary);border-left:4px solid var(--primary);border-radius:8px;background:color-mix(in srgb,var(--primary) 12%,var(--card));color:var(--foreground);font-size:14px;font-weight:600}

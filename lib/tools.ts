@@ -1,15 +1,16 @@
+import {fieldHelp} from './field-help.ts';
 import {translatedCopy,type Language} from './localization/index.ts';
 export type Locale = Language;
 export type Copy = Record<Locale,string>;
 export const bi = (es:string,en:string):Copy => translatedCopy(es,en);
-export type Field = {id:string;label:Copy;type:'number'|'date'|'text'|'textarea'|'select'|'checkbox';value:string;min?:number;max?:number;step?:number;options?:string[];unit?:string;required?:boolean};
+export type Field = {id:string;label:Copy;help:Copy;type:'number'|'date'|'text'|'textarea'|'select'|'checkbox';value:string;min?:number;max?:number;step?:number;options?:string[];unit?:string;required?:boolean};
 export type Tool = {id:string;category:string;title:Copy;description:Copy;fields:Field[];formula:string;explanation:Copy;limitations:Copy;example:Copy;aliases:string[];exportable:boolean;compare:boolean;related:string[];source?:string};
 export const categories = [
  {id:'logistics',title:bi('Logística','Logistics'),icon:'Truck'},
  {id:'finance',title:bi('Finanzas','Finance'),icon:'Landmark'}, {id:'math',title:bi('Matemáticas','Math'),icon:'Calculator'}, {id:'converters',title:bi('Conversores','Converters'),icon:'ArrowLeftRight'}, {id:'date',title:bi('Fecha y hora','Date & time'),icon:'CalendarDays'}, {id:'text',title:bi('Texto','Text'),icon:'Type'}, {id:'developer',title:bi('Desarrollo','Developer'),icon:'Code2'}
 ];
-const n=(id:string,es:string,en:string,value:number,min=0,max=1e9,unit='',step=0.01):Field=>({id,label:bi(es,en),type:'number',value:String(value),min,max,unit,step});
-const field=(id:string,es:string,en:string,value:string,type:Field['type']='text',options?:string[]):Field=>({id,label:bi(es,en),type,value,options});
+const n=(id:string,es:string,en:string,value:number,min=0,max=1e9,unit='',step=0.01):Field=>({id,label:bi(es,en),help:bi(fieldHelp(es).text,fieldHelp(es,'en').text),type:'number',value:String(value),min,max,unit,step});
+const field=(id:string,es:string,en:string,value:string,type:Field['type']='text',options?:string[]):Field=>({id,label:bi(es,en),help:bi(fieldHelp(es).text,fieldHelp(es,'en').text),type,value,options});
 const rate=n('rate','Interés anual','Annual interest',5,0,50,'%',.01);
 const years=n('years','Plazo','Term',10,1,50,'years',1);
 const financeSource='https://www.consumerfinance.gov/ask-cfpb/how-does-paying-down-a-mortgage-work-en-1943/';

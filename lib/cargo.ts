@@ -27,7 +27,7 @@ export type Cargo={id:string;name:string;length:number;width:number;height:numbe
 export type Placed={id:string;index:number;x:number;y:number;z:number;width:number;length:number;height:number;weight:number;rotated:boolean};
 type Rect={x:number;y:number;width:number;length:number};
 export const defaultSpace:Space={...vehiclePresets[0],margin:20,gap:0,maxWeight:0};
-export const defaultCargo:Cargo={id:'p1',name:'EUR / EPAL 1',length:1200,width:800,height:1200,weight:0,quantity:33,rotate:true,levels:1};
+export const defaultCargo:Cargo={id:'p1',name:'EUR / EPAL 1',length:1200,width:800,height:1200,weight:250,quantity:33,rotate:true,levels:1};
 export function validateCargo(space:Space,items:Cargo[]) {
  for(const k of ['length','width','height'] as const)if(!Number.isFinite(space[k])||space[k]<100||space[k]>50000)throw Error('SPACE');
  for(const k of ['margin','gap','maxWeight','doorWidth','doorHeight'] as const)if(!Number.isFinite(space[k])||space[k]<0||space[k]>1000000)throw Error('SPACE');
