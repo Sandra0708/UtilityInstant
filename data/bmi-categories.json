@@ -1,0 +1,4 @@
+{
+  "international": {"thresholds": [18.5, 25, 30, 35, 40], "categories": ["under", "reference", "over", "obesity1", "obesity2", "obesity3"], "source": "https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html"},
+  "japan": {"thresholds": [18.5, 25, 30, 35, 40], "categories": ["under", "reference", "obesity1", "obesity2", "obesity3", "obesity4"], "source": "https://www.jasso.or.jp/data/magazine/pdf/chart_A.pdf"}
+}
