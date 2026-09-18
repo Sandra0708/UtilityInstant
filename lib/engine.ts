@@ -1,6 +1,9 @@
 import {generatePasswords,passwordDefaults} from './passwords.ts';
 import {calculateHealth,healthDefaults} from './health.ts';
 import {isHealth} from './health-tools.ts';
+import {clockMinutes,durationText} from './engines/hours.ts';
+import {convertTime} from './engines/timezones.ts';
+import {timeText} from './localization/time.ts';
 import {translate} from './localization/index.ts';
 ﻿import { getTool, type Locale } from './tools.ts';
 import { readDocuments, toTable } from './json-bson.ts';
@@ -16,7 +19,9 @@ const tool=getTool(id);if(!tool)throw new InputError(msg(locale,'Herramienta no 
 const say=(es:string,en:string)=>msg(locale,es,en);const v:Record<string,number>={};
 for(const f of tool.fields){const s=raw[f.id];if(typeof s!=='string'||s.length>100000)throw new InputError(say('Revisa los datos: hay campos vacíos o demasiado largos.','Check your inputs: fields are missing or too long.'));if(f.type==='number'){if(!s.trim())throw new InputError(say('Completa todos los campos numéricos.','Complete all number fields.'));const x=Number(s);if(!Number.isFinite(x)||(f.min!==undefined&&x<f.min)||(f.max!==undefined&&x>f.max)||(f.step===1&&!Number.isInteger(x)))throw new InputError(say(`Revisa ${f.label.es}: debe estar entre ${f.min} y ${f.max}${f.step===1?' y ser entero':''}.`,`Check ${f.label.en}: enter ${f.step===1?'an integer':'a number'} between ${f.min} and ${f.max}.`));v[f.id]=x;}if(f.type==='select'&&!f.options?.includes(s))throw new InputError(say('Selecciona una opción válida.','Select a valid option.'));if(f.type==='date'){try{calendarDate(s);}catch{throw new InputError(say('Introduce una fecha válida (años 0100–9999).','Enter a valid date (years 0100–9999).'));}}}
 let r:Result={main:0,label:say('Resultado','Result'),metrics:[],columns:[],rows:[]};const metric=(label:string,value:number|string,money=false)=>({label,value,money});
-if(id==='routes'){r.main=v.km/v.speed;r.label=say('Horas de conducción sin paradas','Driving hours without stops');r.unit='h';}
+if(id==='hours'){const start=clockMinutes(raw.start),end=clockMinutes(raw.end);r.main=durationText(end-start+(end<start?1440:0));r.label=timeText(locale,'total');}
+else if(id==='timezones'){r.main=convertTime(raw.datetime,raw.from,raw.to).destination;r.label=timeText(locale,'to');}
+else if(id==='routes'){r.main=v.km/v.speed;r.label=say('Horas de conducción sin paradas','Driving hours without stops');r.unit='h';}
 else if(id==='cargo'){r.main=v.length*v.width*v.height/1e9;r.label=say('Volumen interior','Internal volume');r.unit='m³';}
 else if(id==='mortgage'||id==='loan'){const a=amortize(v.amount,v.rate,v.years);r={...r,main:a.payment,label:say('Tu cuota mensual','Your monthly payment'),money:true,unit:say('/ mes','/ month'),metrics:[metric(say('Capital prestado','Principal'),v.amount,true),metric(say('Intereses totales','Total interest'),a.interest,true),metric(say('Total a devolver','Total repayment'),a.total,true)],columns:[say('Año','Year'),say('Capital devuelto','Principal repaid'),say('Intereses','Interest'),say('Saldo pendiente','Balance')],rows:a.rows,chart:{label:say('Saldo pendiente por año','Outstanding balance by year'),values:a.chart}};}
 else if(id==='compound'){let balance=v.amount,contributed=v.amount;const values=[balance],secondary=[contributed];for(let m=1;m<=v.years*12;m++){balance=balance*(1+v.rate/1200)+v.contribution;contributed+=v.contribution;if(m%12===0){r.rows.push([m/12,contributed,balance-contributed,balance]);values.push(balance);secondary.push(contributed);}}r={...r,main:balance,money:true,label:say('Tu ahorro al final del plazo','Your savings at the end'),metrics:[metric(say('Total aportado','Total contributed'),contributed,true),metric(say('Intereses generados','Interest earned'),balance-contributed,true)],columns:[say('Año','Year'),say('Aportaciones','Contributions'),say('Intereses','Interest'),say('Capital total','Total capital')],chart:{label:say('Crecimiento del ahorro','Savings growth'),values,secondary}};}

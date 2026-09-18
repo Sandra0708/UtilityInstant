@@ -1,0 +1,22 @@
+'use client';
+import {useEffect,useId,useRef,useState} from 'react';
+import type {RawTimeZone} from '@vvo/tzdb';
+import {timeText} from '@/lib/localization/time';
+import type {Language} from '@/lib/localization';
+import {fixedOffsets,offsetName,offsetAt,zonedWall} from '@/lib/engines/timezones';
+import {japaneseCities} from '@/lib/zone-cities';
+import s from './time-workspace.module.css';
+const regions:Record<string,string>={AF:'002',EU:'150',AS:'142',NA:'021',SA:'005',OC:'009',AN:'010'};
+export default function ZonePicker({value,onChange,label,locale}:{value:string;onChange:(zone:string)=>void;label:string;locale:Language}){
+ const [open,setOpen]=useState(false),[zones,setZones]=useState<RawTimeZone[]>([]),[query,setQuery]=useState(''),[recent,setRecent]=useState<string[]>([]),[now,setNow]=useState(0),[error,setError]=useState(false);
+ const id=useId(),search=useRef<HTMLInputElement>(null),t=(key:Parameters<typeof timeText>[1])=>timeText(locale,key);
+ useEffect(()=>{if(!open)return;let active=true;search.current?.focus();import('@vvo/tzdb').then(data=>{if(active)setZones(data.rawTimeZones.filter(z=>{try{offsetAt(Date.now(),z.name);return true;}catch{return false;}}));}).catch(()=>{if(active)setError(true);});const timer=setInterval(()=>setNow(Date.now()),60000);return()=>{active=false;clearInterval(timer);};},[open]);
+ function choose(zone:string){let selected=zone;try{if(zone==='local')selected=Intl.DateTimeFormat().resolvedOptions().timeZone;offsetAt(now,selected);}catch{return;}const canonical=zones.find(z=>z.name===selected||z.group.includes(selected))?.name??selected;onChange(canonical);const list=[canonical,...recent.filter(z=>z!==canonical)].slice(0,5);setRecent(list);try{localStorage.setItem('nexo.recent-zones',JSON.stringify(list));}catch{}setOpen(false);setQuery('');}
+ const names=new Intl.DisplayNames([locale],{type:'region'});
+ const zoneLabel=(z:RawTimeZone)=>{let long='';try{long=new Intl.DateTimeFormat(locale,{timeZone:z.name,timeZoneName:'long'}).formatToParts(now).find(p=>p.type==='timeZoneName')?.value||'';}catch{}return `${locale==='ja'?(japaneseCities[z.mainCities[0]]??z.mainCities[0]):z.mainCities[0]} · ${names.of(z.countryCode)||z.countryName} · ${long}`;};
+ const normalize=(v:string)=>v.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+ const filtered=zones.filter(z=>normalize([zoneLabel(z),z.name,...z.group,...z.mainCities,z.countryName,z.abbreviation].join(' ')).includes(normalize(query)));
+ const selected=zones.find(z=>z.name===value||z.group.includes(value));
+ function option(zone:string,labelText:string){let clock='';try{clock=zonedWall(now,zone).slice(11)+' · '+offsetName(offsetAt(now,zone));}catch{return null;}return <button type="button" key={zone} className={s.zoneOption} aria-pressed={zone===value} onClick={()=>choose(zone)}><span>{labelText}<small>{zone}</small></span><time>{clock}</time></button>;}
+ return <div className={s.picker}><span className={s.label}>{label}</span><button type="button" className={s.zoneTrigger} aria-expanded={open} aria-controls={id} aria-label={label+': '+value} onClick={()=>{setNow(Date.now());try{const list=JSON.parse(localStorage.getItem('nexo.recent-zones')||'[]');if(Array.isArray(list))setRecent(list.filter(x=>typeof x==='string').slice(0,5));}catch{}setError(false);setOpen(v=>!v);}}>{selected?zoneLabel(selected):value}<span aria-hidden="true">⌄</span></button>{open&&<section id={id} aria-label={label} className={s.zonePanel}><div className={s.zoneSearch}><input onKeyDown={e=>{if(e.key==='Escape')setOpen(false);}} ref={search} aria-label={t('search')} placeholder={t('search')} value={query} onChange={e=>setQuery(e.target.value)}/><button type="button" onClick={()=>setOpen(false)}>{t('close')}</button></div><div className={s.zoneList}>{!query&&<><button type="button" className={s.zoneOption} onClick={()=>choose('local')}>{t('automatic')}</button>{recent.length>0&&<h3>{t('recent')}</h3>}{recent.map(zone=>option(zone,zone))}</>}<h3>{t('fixed')}</h3>{fixedOffsets.map(n=>offsetName(n)).filter(zone=>normalize(zone).includes(normalize(query))).map(zone=>option(zone,zone))}{error?<p role="alert">{t('failed')}</p>:!zones.length?<p>{t('loading')}</p>:Object.entries(regions).map(([continent,region])=>{const rows=filtered.filter(z=>z.continentCode===continent);return rows.length?<div key={continent}><h3>{names.of(region)}</h3>{rows.map(z=>option(z.name,zoneLabel(z)))}</div>:null;})}</div></section>}</div>;
+}
