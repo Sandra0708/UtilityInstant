@@ -1,0 +1,254 @@
+[
+  {
+    "country": "AT",
+    "price": 0.3272,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "BE",
+    "price": 0.3499,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "BG",
+    "price": 0.1355,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "HR",
+    "price": 0.1658,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "CY",
+    "price": 0.2774,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "CZ",
+    "price": 0.3217,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "DK",
+    "price": 0.3312,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "EE",
+    "price": 0.2303,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "FI",
+    "price": 0.2254,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "FR",
+    "price": 0.2561,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "DE",
+    "price": 0.3869,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "GR",
+    "price": 0.2381,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "HU",
+    "price": 0.1082,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "IE",
+    "price": 0.4042,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "IT",
+    "price": 0.2966,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "LV",
+    "price": 0.2452,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "LT",
+    "price": 0.1955,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "LU",
+    "price": 0.2665,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "MT",
+    "price": 0.1282,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "NL",
+    "price": 0.2558,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "PL",
+    "price": 0.2709,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "PT",
+    "price": 0.2435,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "RO",
+    "price": 0.2893,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "SK",
+    "price": 0.1853,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "SI",
+    "price": 0.2121,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "ES",
+    "price": 0.2669,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "SE",
+    "price": 0.2711,
+    "currency": "EUR",
+    "period": "2025-S2",
+    "verified_on": "2026-09-18",
+    "source": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_pc_204?lang=EN&time=2025-S2&nrg_cons=KWH2500-4999&currency=EUR&tax=I_TAX&unit=KWH",
+    "scope": "EU_DC_TAX_INCLUDED"
+  },
+  {
+    "country": "US",
+    "price": 0.173,
+    "currency": "USD",
+    "period": "2025",
+    "verified_on": "2026-09-18",
+    "source": "https://www.eia.gov/energyexplained/electricity/prices-and-factors-affecting-prices.php",
+    "scope": "US_RESIDENTIAL_PRELIMINARY"
+  }
+]

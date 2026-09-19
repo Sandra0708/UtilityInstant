@@ -10,7 +10,7 @@ import {Tabs,TabsList,TabsTrigger} from '@/components/ui/tabs';
 import {categories,tools,searchTools,type Locale,type Tool} from '@/lib/tools';
 import {AdSlot} from './ads';
 import {Fragment} from 'react';
-export const icons:Record<string,typeof Search>={Heart,hours:CalendarDays,timezones:Globe2,bmi:Heart,tdee:Heart,'body-fat':Heart,'ideal-weight':Heart,Truck,routes:Truck,cargo:Truck,Landmark,Calculator,ArrowLeftRight,CalendarDays,Type,Code2,mortgage:Landmark,loan:Landmark,compound:TrendingUp,percentage:Percent,discount:Tag,vat:Percent,length:ArrowLeftRight,weight:ArrowLeftRight,temperature:ArrowLeftRight,date:CalendarDays,age:CalendarDays,words:Type,json:Braces,password:KeyRound,mean:BarChart3,base64:Code2};
+export const icons:Record<string,typeof Search>={Heart,fuel:Truck,electricity:Calculator,pace:Heart,hours:CalendarDays,timezones:Globe2,bmi:Heart,tdee:Heart,'body-fat':Heart,'ideal-weight':Heart,Truck,routes:Truck,cargo:Truck,Landmark,Calculator,ArrowLeftRight,CalendarDays,Type,Code2,mortgage:Landmark,loan:Landmark,compound:TrendingUp,percentage:Percent,discount:Tag,vat:Percent,length:ArrowLeftRight,weight:ArrowLeftRight,temperature:ArrowLeftRight,date:CalendarDays,age:CalendarDays,words:Type,json:Braces,password:KeyRound,mean:BarChart3,base64:Code2};
 type Prefs={currency:string;number:string;time:string;zone:string;units:string;theme:string};
 const base:Prefs={currency:'EUR',number:'es-ES',time:'24',zone:'local',units:'metric',theme:'dark'};
 type State={prefs:Prefs;setPrefs:(p:Prefs)=>void;favorites:string[];toggle:(id:string)=>void;history:{id:string;date:number}[];record:(id:string)=>void;clear:()=>void};

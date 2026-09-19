@@ -1,5 +1,8 @@
 import type {Language} from './localization/languages.ts';
 export const healthSlugs:Record<string,Record<Language,string>>={
+ fuel:{es:'calculadora-coste-combustible',en:'fuel-cost-calculator',de:'spritkostenrechner',fr:'calcul-cout-carburant',it:'calcolo-costo-carburante',pt:'calculadora-custo-combustivel',nl:'brandstofkosten-berekenen',ja:'ガソリン代計算'},
+ electricity:{es:'calculadora-consumo-electrico',en:'electricity-cost-calculator',de:'stromkostenrechner',fr:'calcul-consommation-electrique',it:'calcolo-consumo-elettrico',pt:'calculadora-consumo-eletrico',nl:'stroomverbruik-berekenen',ja:'電気代計算'},
+ pace:{es:'calculadora-ritmo-carrera',en:'pace-calculator',de:'pace-rechner',fr:'calcul-allure-course',it:'calcolo-passo-corsa',pt:'calculadora-de-pace',nl:'hardloop-tempo-berekenen',ja:'ペース計算'},
  hours:{es:'calculadora-de-horas',en:'hours-calculator',de:'stundenrechner',fr:'calcul-heures',it:'calcolo-ore',pt:'calculadora-de-horas',nl:'uren-berekenen',ja:'時間計算'},
  timezones:{es:'conversor-zona-horaria',en:'time-zone-converter',de:'zeitzonenrechner',fr:'convertisseur-fuseau-horaire',it:'convertitore-fuso-orario',pt:'conversor-de-fuso-horario',nl:'tijdzone-omrekenen',ja:'時差計算'},
  bmi:{es:'calculadora-imc',en:'bmi-calculator',de:'bmi-rechner',fr:'calcul-imc',it:'calcolo-bmi',pt:'calculadora-imc',nl:'bmi-berekenen',ja:'bmi計算'},

@@ -1,0 +1,11 @@
+import type {Tool,Field} from './tools.ts';
+import {mobilityCopy as c,type MobilityKey} from './localization/mobility.ts';
+export const mobilityIds=['fuel','electricity','pace'] as const;
+export type MobilityId=typeof mobilityIds[number];
+export const isMobility=(id:string):id is MobilityId=>mobilityIds.some(v=>v===id);
+const field=(id:string,label:MobilityKey,value:string,help:MobilityKey):Field=>({id,label:c(label),help:c(help),value,type:'text'});
+export const mobilityTools:Omit<Tool,'exportable'|'compare'|'related'>[]=[
+ {id:'fuel',category:'logistics',title:c('fuel'),description:c('fuelDesc'),fields:[field('distance','distance','500','fuelHelp'),field('consumption','consumption','6.5','fuelHelp'),field('price','price','1.6','fuelHelp'),field('people','people','2','fuelHelp')],formula:'cost = distance_km × consumption_per_100_km / 100 × unit_price',explanation:c('fuelHelp'),limitations:c('fuelLimits'),example:c('fuelDesc'),aliases:['gasolina','diesel','combustible','fuel','mpg','electric vehicle','sprit','carburant'],source:'https://www.nist.gov/document/appc-11-hb44-finalpdf'},
+ {id:'electricity',category:'converters',title:c('electricity'),description:c('electricityDesc'),fields:[field('watts','watts','60','electricityHelp'),field('hours','hours','5','electricityHelp'),field('days','days','30','electricityHelp'),field('price','price','0.25','electricityHelp'),field('standby','standby','2','electricityHelp')],formula:'kWh = (W_active × hours + W_standby × (24 − hours)) × days / 1000',explanation:c('electricityHelp'),limitations:c('electricityLimits'),example:c('electricityDesc'),aliases:['electricidad','kwh','watt','standby','electricity','strom','électricité'],source:'https://www.energy.gov/cmei/femp/measuring-standby-power'},
+ {id:'pace',category:'health',title:c('pace'),description:c('paceDesc'),fields:[field('value','paceValue','5:00','paceHelp'),field('distance','distance','10','paceHelp')],formula:'pace = time / distance; Riegel: T₂ = T₁ × (D₂ / D₁)^1.06',explanation:c('paceHelp'),limitations:c('paceLimits'),example:c('paceDesc'),aliases:['ritmo','running','pace','riegel','maraton','marathon','allure','lauftempo'],source:'https://pubmed.ncbi.nlm.nih.gov/7235349/'}
+];

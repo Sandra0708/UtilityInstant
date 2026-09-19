@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {fuel,electricity,pace,riegel,seconds,timeString,inputNumber,mileKm} from '../lib/engines/mobility.ts';
+import {calculateMobility,mobilityDefaults} from '../lib/mobility.ts';
+import {mobilityMessages} from '../lib/localization/mobility.ts';
+import prices from '../data/electricity-prices.json' with {type:'json'};
+import {toolPath,resolveToolId} from '../lib/tool-paths.ts';
+const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-8,`${a} != ${b}`);
+const base={distance:500,distanceUnit:'km',consumption:6.5,unit:'l100',price:1.6,priceUnit:'litre',people:2};
+test('fuel reconciles total and person costs and permits zero distance and price',()=>{const r=fuel(base);close(r.amount,32.5);close(r.cost,52);close(r.perPerson,26);close(r.perKm,.104);assert.equal(fuel({...base,distance:0}).cost,0);assert.equal(fuel({...base,price:0}).cost,0);});
+test('US and imperial MPG and price units stay distinct and equivalent when converted',()=>{
+ close(fuel({...base,distance:100,distanceUnit:'mi',consumption:25,unit:'mpgus',price:4,priceUnit:'usgal'}).cost,16);
+ const a=fuel({...base,unit:'mpgus',consumption:40}),b=fuel({...base,unit:'mpguk',consumption:40});assert.ok(b.amount>a.amount);close(b.amount/a.amount,4.54609/3.785411784);
+ const original=fuel(base);for(const unit of ['l100','kml','mpgus','mpguk'])close(fuel({...base,unit,consumption:original.conversions[unit]}).cost,52);
+ close(fuel({...base,unit:'kml',consumption:100/6.5}).amount,32.5);
+});
+test('electric vehicle comparison uses kWh pricing and rejects incompatible dimensions',()=>{const r=calculateMobility('fuel',{...mobilityDefaults('fuel'),compare:'yes'},'es');close(r.a.cost,52);close(r.b.amount,80);close(r.b.cost,20);assert.throws(()=>fuel({...base,unit:'kwh100'}));assert.throws(()=>fuel({...base,people:1.5}));assert.throws(()=>fuel({...base,consumption:0}));});
+test('electricity standby occupies only unused hours and annual value is separate',()=>{const r=electricity({watts:100,hours:5,days:30,price:.25,standby:2});close(r.active,15);close(r.idle,1.14);close(r.kwh,16.14);close(r.cost,4.035);close(r.annualStandby,13.87);close(r.annualStandbyCost,3.4675);const continuous=electricity({watts:100,hours:24,days:30,price:.25,standby:50});assert.equal(continuous.idle,0);assert.equal(continuous.annualStandby,0);assert.throws(()=>electricity({watts:100,hours:25,days:30,price:.25,standby:1}));});
+test('pace unit conversions and fractional final split conserve total time',()=>{const r=pace({value:'5:00',unit:'minkm',distance:21.0975,splitUnit:'km'});close(r.speed,12);close(r.perMile,300*mileKm);assert.equal(timeString(r.time,true),'1:45:29');assert.equal(r.rows.length,22);close(r.rows.reduce((n,row)=>n+row.duration,0),r.time);close(r.rows.at(-1).elapsed,r.time);close(pace({value:'12',unit:'kmh',distance:10,splitUnit:'mi'}).time,3000);});
+test('Riegel has an independent reference and same-distance identity',()=>{close(riegel(10,10,3000),3000);close(riegel(20,10,3000),3000*2**1.06);const r=pace({value:'5:00',unit:'minkm',distance:10,splitUnit:'km',reference:{distance:10,seconds:3000}});assert.ok(r.races[3].prediction>r.races[3].time);assert.throws(()=>riegel(10,0,3000));});
+test('input parsing rejects malformed times, grouping, nonfinite and zero pace',()=>{assert.equal(inputNumber('6,5'),6.5);assert.equal(seconds('1:02:03',true),3723);assert.equal(timeString(59.6),'1:00');for(const v of ['5:60','0:00','-1:30'])assert.throws(()=>seconds(v));for(const v of ['1,000.5','Infinity','','2e3'])assert.throws(()=>inputNumber(v));assert.throws(()=>pace({value:'0',unit:'kmh',distance:10,splitUnit:'km'}));});
+test('all eight locales, encoded slugs and dated sourced electricity references',()=>{for(const values of Object.values(mobilityMessages)){assert.equal(values.length,8);assert.ok(values.every(v=>v.trim()));}for(const id of ['fuel','electricity','pace'])for(const locale of ['es','en','de','ja','fr','nl','it','pt']){assert.equal(resolveToolId(encodeURIComponent(toolPath(id,locale).slice(7))),id);assert.ok(calculateMobility(id,mobilityDefaults(id),locale).main);}assert.equal(new Set(prices.map(p=>p.country)).size,prices.length);assert.ok(prices.every(p=>p.price>0&&p.verified_on==='2026-09-18'&&p.source.startsWith('https://')));});

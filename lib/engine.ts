@@ -1,6 +1,8 @@
 import {generatePasswords,passwordDefaults} from './passwords.ts';
 import {calculateHealth,healthDefaults} from './health.ts';
 import {isHealth} from './health-tools.ts';
+import {isMobility} from './mobility-tools.ts';
+import {calculateMobility} from './mobility.ts';
 import {clockMinutes,durationText} from './engines/hours.ts';
 import {convertTime} from './engines/timezones.ts';
 import {timeText} from './localization/time.ts';
@@ -14,6 +16,7 @@ export function calendarDate(s:string){if(!/^\d{4}-\d{2}-\d{2}$/.test(s))throw n
 export const factors={length:{mm:.001,cm:.01,m:1,km:1000,in:.0254,ft:.3048,yd:.9144,mi:1609.344},weight:{mg:.000001,g:.001,kg:1,t:1000,oz:.028349523125,lb:.45359237}};
 export function amortize(amount:number,rate:number,years:number){const months=years*12,i=rate/1200;let balance=Math.round(amount*100);const payment=i===0?Math.round(balance/months):Math.round(balance*i/-Math.expm1(-months*Math.log1p(i)));let interestTotal=0,capitalYear=0,interestYear=0;const rows:number[][]=[];const chart=[balance/100];for(let m=1;m<=months;m++){const interest=Math.round(balance*i);const principal=m===months?balance:Math.min(balance,payment-interest);balance-=principal;interestTotal+=interest;capitalYear+=principal;interestYear+=interest;if(m%12===0){rows.push([m/12,capitalYear/100,interestYear/100,balance/100]);chart.push(balance/100);capitalYear=0;interestYear=0;}}return {payment:payment/100,interest:interestTotal/100,total:Math.round(amount*100)/100+interestTotal/100,rows,chart};}
 export function calculate(id:string,raw:Record<string,string>,locale:Locale='es'):Result{
+if(isMobility(id)){if(getTool(id)!.fields.some(f=>!(f.id in raw)))throw new InputError(msg(locale,'Completa todos los campos numéricos.','Complete all number fields.'));return calculateMobility(id,raw,locale);}
 if(isHealth(id)){if(getTool(id)!.fields.some(f=>!(f.id in raw)))throw new InputError(msg(locale,'Completa todos los campos numéricos.','Complete all number fields.'));return calculateHealth(id,{...healthDefaults(id,locale),...raw},locale);}
 const tool=getTool(id);if(!tool)throw new InputError(msg(locale,'Herramienta no disponible.','Tool unavailable.'));
 const say=(es:string,en:string)=>msg(locale,es,en);const v:Record<string,number>={};
